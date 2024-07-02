@@ -8,7 +8,7 @@
               "height": 500
             },
         "workbench.editorAssociations": {
-            "*.qmd": "vscode.markdown.preview.editor"
+            "*.qmd": "vscode.markdown.visual.editor"
         }
     },
     "extensions": [
