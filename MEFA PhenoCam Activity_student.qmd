@@ -440,7 +440,7 @@ Now try this exercise with another PhenoCam site. Perhaps choose a different eco
 
 To do this, edit the cell near the beginning where you assign the site name, vegetation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Be sure to re-run that cell and all cells below it in sequential order.
 
-Before trying a new site, run this code cell to re-set your plotting parameters and delete all the downloaded files in your "pheno_images" folder.
+But before trying a new site, run this code cell to re-set your plotting parameters and delete all the downloaded files in your "pheno_images" folder.
 
 ```{r}
 # Reset plotting parameters
