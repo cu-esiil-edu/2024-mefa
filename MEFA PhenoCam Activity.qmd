@@ -129,6 +129,8 @@ GR_sites <- subset(sitelist_table, primary_veg_type == "GR")
 View(GR_sites)
 ```
 
+**Challenge**: Can you edit the code cell above to subset the sitelist_table by a different primary vegetation type? How about by a different variable (table column)?
+
 #### Create a Map of the PhenoCam Sites
 
 Now, we'll create an interactive map to view all the PhenoCam sites colored by their primary vegetation type. First, using our "sitelist_table" that we downloaded above, we filter out any sites for which a primary vegetation type isn't listed or an "NA" is entered. We'll call this new data table "sitelist_table2".
@@ -147,24 +149,32 @@ state_map <- map_data("state")
 
 # Create map of sites
 Site_map <- ggplot() +
-  geom_polygon(data = world_map, aes(x = long, y = lat, group = group), # world map
+# Add world map  
+geom_polygon(data = world_map, aes(x = long, y = lat, group = group), 
                fill = "white", color = "black") +
-  geom_polygon(data = state_map, aes(x = long, y = lat, group = group), #site map
+# Add state map
+geom_polygon(data = state_map, aes(x = long, y = lat, group = group), 
                fill = NA, color = "black") +  
-  geom_point(data = sitelist_table2, aes(x = lon, y = lat, #PhenoCam sites
+# Add PhenoCam sites as points
+geom_point(data = sitelist_table2, aes(x = lon, y = lat,
               color = primary_veg_type,
               text = paste("Site:", site)), size = 3) +
-  scale_color_manual(values=as.vector(trubetskoy(11))) +  #choose colors
-  labs(title = "PhenoCam Sites by Vegetation Type", x = "Longitude", 
-       y = "Latitude", color = "Primary Veg Type")+ #add labels
-  theme_minimal()+
-  theme(plot.title = element_text(hjust = 0.5, size = 20)) #center title and increase font size
+# Choose legend colors  
+scale_color_manual(values=as.vector(trubetskoy(11))) + 
+# Add title and labels  
+labs(title = "PhenoCam Sites by Vegetation Type", x = "Longitude", 
+       y = "Latitude", color = "Primary Veg Type")
+# Indicate map theme (general appearance)
+theme_minimal()+
+# Center title and increase font size
+theme(plot.title = element_text(hjust = 0.5, size = 20))
   
 # View map
 Site_map
 ```
+**Challenge**: Can you change the title of the map? Make the change and re-run the code cell above.
 
-Let's make the map interactive! You can hover over sites to see their details, draw a box around a specific area to zoom into the region, and click on various legend entries to toggle them on or off.
+Let's make the map interactive! You can hover over sites to see their details, draw a box around a specific area to zoom into the region, and click on various legend entries to toggle them on or off. Double click on the map to zoom back out.
 
 ```{r}
 # Make map interactive
@@ -173,7 +183,7 @@ ggplotly(Site_map)
 
 #### Download & Plot Canopy Greenness
 
-Now, let's view some PhenoCam images and greenness data. Choose a site to explore, and enter the site name and relevant information in the cell below. For example, I chose the site "lacclair", which represents a deciduous broadleaf ("DB") vegetation type, and I chose to look at data from the year 2022. You'll also need to specify which region of interest (ROI) to use for your site. Recall that some sites have multiple ROIs, each with a unique ID number. You can view the possible ROIs for your site on the [PhenoCam website.](https://phenocam.nau.edu/webcam/)
+Now, let's view some PhenoCam images and greenness data. Choose a site to explore, and enter the site name and relevant information in the cell below. For example, I chose the site "lacclair", which represents a deciduous broadleaf ("DB") vegetation type, and I chose to look at images from the year 2022. You'll also need to specify which region of interest (ROI) to use for your site. Recall that some sites have multiple ROIs, each with a unique ID number. You can view the possible ROIs for your site on the [PhenoCam website.](https://phenocam.nau.edu/webcam/)
 
 ```{r}
 # Choose site to explore 
@@ -183,11 +193,17 @@ site_name = "lacclair"
 # Indicate vegetation type (listed on site page)
 veg = "DB"
 
-# Choose data year
+# Choose data year (for downloading images later)
 year = 2022
 
 # Indicate ROI ID
 ROI = 1000
+
+# View the objects to make sure it worked
+site_name
+veg
+year
+ROI
 ```
 
 First, we'll download canopy greenness (GCC = green chromatic coordinate) timeseries data for your chosen site. The GCC data are already condensed down to 1-day and 3-day data products (type = '3day' or '1day'). See [Richardson et al. (2018)](https://www.nature.com/articles/sdata201828) for more information about PhenoCam data processing.
@@ -218,8 +234,11 @@ plot(GCC_timeseries$date, GCC_timeseries$gcc_90,
     col = "darkgreen", type = "b",
     cex = 1.5, cex.lab = 2, cex.axis = 2, cex.main = 3,
     xlab = 'Date', ylab = 'GCC', 
-    main = 'Canopy Greenness Timeseries')
+    main = paste0(site_name, ': ', 'Canopy Greenness Timeseries'))
 ```
+
+*Note: Since we created this plot in base R (rather than through another graphing package, such as "ggplot"), the plot isn't saved as an object- it only appears in the built-in viewer for R. However, you can right click on the plot to copy and paste it elsewhere. If you accidently close a plot and want to see it again, just re-run the code cell that created it.*
+
 
 #### Explore Seasonal Transition Dates
 
@@ -243,6 +262,9 @@ trans_dates_path <- paste0(dir, "/", site_name, "_", veg, "_", ROI, "_3day_trans
 trans_dates <- read.table(trans_dates_path,
                  header = TRUE,
                  sep = ",")
+
+#View file
+View(trans_dates)
 ```
 
 Now we'll plot the transition dates on the GCC timeseries.
@@ -339,7 +361,7 @@ download_midday_images(site = site_name,
                        download_dir = dir)
 ```
 
-Now, we'll use those images to create a photo collage that displays changes in phenology throughout the year. First we'll set it up.
+Now, we'll use those images to create a photo collage that displays changes in phenology throughout the year. First we'll set it up and check that it's working correctly. You should have 12 images (1 per month), so when you run the code below, "n" should equal 12. If not, look in your "dir" (pheno_images) folder and make sure you only have images for a single PhenoCam site. If you have more than 12, right click on the images you don't want and delete them from the folder.
 
 ```{r}
 # Isolate images from your designated directory
@@ -369,7 +391,7 @@ for(i in 1:n){
 }
 
 # Add title (feel free to edit the title below)
-mtext('Canopy Greenness Through the Months', font = 2, cex = 1.8, outer = TRUE)
+mtext(paste0(site_name, ': ', 'Canopy Greenness Through the Months', font = 2, cex = 1.8, outer = TRUE))
 ```
 
 Finally, we'll use those same images to create a gif that shows changes in phenology over time. These are great to use in presentations to visualize seasonal transitions!
@@ -405,7 +427,7 @@ As an example, here's the gif I made for the lacclair site. Your gif will be sav
 
 #### Thank you!
 
-If you'd like, now try this exercise with another PhenoCam site. Perhaps try a different ecosystem type!
+If you'd like, now try this exercise with another PhenoCam site. Perhaps try a different ecosystem type! To do this, edit the cell near the beginning where you assign the site name, vegtation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Then be sure to run that cell and all cells below it in sequential order.
 
 Before trying a new site, be sure to either clear your working directory folder (delete the downloaded photos/files) or create/designate a new folder. And run this command to re-set your plotting parameters:
 
