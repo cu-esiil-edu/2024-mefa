@@ -235,13 +235,13 @@ GCC_timeseries[,date:=as.Date(date)]
 par(mar=c(5, 6, 4, 2))
 
 # Create line plot
-plot(GCC_timeseries$date, GCC_timeseries$ggc_90,
+plot(GCC_timeseries$date, GCC_timeseries$gcc_90,
      # Choose line color & type
      col = "darkgreen", type = "b",
      # Change font size
      cex = 1.5, cex.lab = 2, cex.axis = 2, cex.main = 3,
      # Add axis labels
-     xlab = "Date", ylab = = "GCC", 
+     xlab = "Date", ylab = "GCC", 
      # Add title
      main = paste0(site_name, ": ", "Canopy Greenness Timeseries"))
 
@@ -438,12 +438,19 @@ As an example, here's the gif I made for the lacclair site. Your gif will be sav
 
 Now try this exercise with another PhenoCam site. Perhaps choose a different ecosystem type!
 
-To do this, edit the cell near the beginning where you assign the site name, vegtation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Be sure to re-run that cell and all cells below it in sequential order.
+To do this, edit the cell near the beginning where you assign the site name, vegetation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Be sure to re-run that cell and all cells below it in sequential order.
 
-Before trying a new site, be sure to either clear your working directory folder (delete the downloaded photos/files) or create/designate a new folder. And run this command to re-set your plotting parameters:
+Before trying a new site, run this code cell to re-set your plotting parameters and delete all the downloaded files in your "pheno_images" folder.
 
 ```{r}
+# Reset plotting parameters
 dev.off()
+
+# List all files in "pheno_images"
+f <- list.files(dir, include.dirs = F, full.names = T, recursive = T)
+
+# Remove the files
+file.remove(f)
 ```
 
 Thanks for exploring PhenoCam data. Hopefully, you have a new-found appreciation for phenology!

@@ -440,10 +440,17 @@ Now try this exercise with another PhenoCam site. Perhaps choose a different eco
 
 To do this, edit the cell near the beginning where you assign the site name, vegetation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Be sure to re-run that cell and all cells below it in sequential order.
 
-Before trying a new site, be sure to either clear your working directory folder (delete the downloaded photos/files) or create/designate a new folder. And run this command to re-set your plotting parameters:
+Before trying a new site, run this code cell to re-set your plotting parameters and delete all the downloaded files in your "pheno_images" folder.
 
 ```{r}
+# Reset plotting parameters
 dev.off()
+
+# List all files in "pheno_images"
+f <- list.files(dir, include.dirs = F, full.names = T, recursive = T)
+
+# Remove the files
+file.remove(f)
 ```
 
 Thanks for exploring PhenoCam data. Hopefully, you have a new-found appreciation for phenology!
