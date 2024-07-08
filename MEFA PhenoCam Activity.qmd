@@ -380,7 +380,7 @@ Then we'll create the layout.
 
 ```{r}
 # Set up image layout (4 rows & 3 columns)
-par(mar= c(0,0,0,0), mfrow=c(4,3), oma=c(0,25,3,25))
+par(mar= c(0,0,0,0), mfrow=c(4,3), oma=c(0,23,3,23))
 
 # Create monthly image layout with labels (this can take 1-2 min)
 for(i in 1:n){
@@ -391,7 +391,7 @@ for(i in 1:n){
 }
 
 # Add title (feel free to edit the title below)
-mtext(paste0(site_name, ': ', 'Canopy Greenness Through the Months', font = 2, cex = 1.8, outer = TRUE))
+mtext(paste0(site_name, ': ', 'Canopy Greenness Through the Months'), font = 2, cex = 1.8, outer = TRUE)
 ```
 
 Finally, we'll use those same images to create a gif that shows changes in phenology over time. These are great to use in presentations to visualize seasonal transitions!
