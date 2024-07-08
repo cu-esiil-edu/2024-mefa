@@ -6,6 +6,9 @@
         "r.plot.devArgs": {
               "width": 1200,
               "height": 500
+            },
+        "workbench.editorAssociations": {
+              "*.qmd": "quarto.visualEditor"
             }
     },
     "extensions": [
