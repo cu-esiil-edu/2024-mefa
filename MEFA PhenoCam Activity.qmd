@@ -129,7 +129,11 @@ GR_sites <- subset(sitelist_table, primary_veg_type == "GR")
 View(GR_sites)
 ```
 
-**Challenge**: Can you edit the code cell above to subset the sitelist_table by a different primary vegetation type? How about by a different variable (table column)?
+**Challenge**: Can you subset the sitelist_table by a different primary vegetation type? How about by a different variable (table column)? Use the code cell below.
+
+```{r}
+
+```
 
 #### Create a Map of the PhenoCam Sites
 
@@ -231,14 +235,19 @@ GCC_timeseries[,date:=as.Date(date)]
 par(mar=c(5, 6, 4, 2))
 
 # Create line plot
-plot(GCC_timeseries$date, GCC_timeseries$gcc_90, 
-    col = "darkgreen", type = "b",
-    cex = 1.5, cex.lab = 2, cex.axis = 2, cex.main = 3,
-    xlab = 'Date', ylab = 'GCC', 
-    main = paste0(site_name, ': ', 'Canopy Greenness Timeseries'))
+plot(GCC_timeseries$date, GCC_timeseries$ggc_90,
+     # Choose line color & type
+     col = "darkgreen", type = "b",
+     # Change font size
+     cex = 1.5, cex.lab = 2, cex.axis = 2, cex.main = 3,
+     # Add axis labels
+     xlab = "Date", ylab = = "GCC", 
+     # Add title
+     main = paste0(site_name, ": ", "Canopy Greenness Timeseries"))
+
 ```
 
-*Note: Since we created this plot in base R (rather than through another graphing package, such as "ggplot"), the plot isn't saved as an object- it only appears in the built-in viewer for R. However, you can right click on the plot to copy and paste it elsewhere. If you accidently close a plot and want to see it again, just re-run the code cell that created it.*
+*Note: Since we created this plot in base R (rather than through another graphing package, such as "ggplot"), the plot isn't saved as an object- it only appears in the built-in viewer for R. However, you can right click on the plot to copy and paste it elsewhere. If you accidentally close a plot and want to see it again, just re-run the code cell that created it.*
 
 #### Explore Seasonal Transition Dates
 
@@ -429,7 +438,7 @@ As an example, here's the gif I made for the lacclair site. Your gif will be sav
 
 Now try this exercise with another PhenoCam site. Perhaps choose a different ecosystem type!
 
-To do this, edit the cell near the beginning where you assign the site name, vegtation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Then be sure to run that cell and all cells below it in sequential order.
+To do this, edit the cell near the beginning where you assign the site name, vegtation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Be sure to re-run that cell and all cells below it in sequential order.
 
 Before trying a new site, be sure to either clear your working directory folder (delete the downloaded photos/files) or create/designate a new folder. And run this command to re-set your plotting parameters:
 
