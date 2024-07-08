@@ -147,7 +147,7 @@ Then, we'll create a static map of the PhenoCam sites using their latitude and l
 world_map <- map_data("world")
 state_map <- map_data("state")
 
-# Create map of sites
+## Create map of sites
 Site_map <- ggplot() +
 # Add world map  
 geom_polygon(data = world_map, aes(x = long, y = lat, group = group), 
@@ -163,15 +163,16 @@ geom_point(data = sitelist_table2, aes(x = lon, y = lat,
 scale_color_manual(values=as.vector(trubetskoy(11))) + 
 # Add title and labels  
 labs(title = "PhenoCam Sites by Vegetation Type", x = "Longitude", 
-       y = "Latitude", color = "Primary Veg Type")
+       y = "Latitude", color = "Primary Veg Type") +
 # Indicate map theme (general appearance)
-theme_minimal()+
+theme_minimal() +
 # Center title and increase font size
 theme(plot.title = element_text(hjust = 0.5, size = 20))
   
 # View map
 Site_map
 ```
+
 **Challenge**: Can you change the title of the map? Make the change and re-run the code cell above.
 
 Let's make the map interactive! You can hover over sites to see their details, draw a box around a specific area to zoom into the region, and click on various legend entries to toggle them on or off. Double click on the map to zoom back out.
@@ -199,7 +200,7 @@ year = 2022
 # Indicate ROI ID
 ROI = 1000
 
-# View the objects to make sure it worked
+# View the objects to make sure correct
 site_name
 veg
 year
@@ -238,7 +239,6 @@ plot(GCC_timeseries$date, GCC_timeseries$gcc_90,
 ```
 
 *Note: Since we created this plot in base R (rather than through another graphing package, such as "ggplot"), the plot isn't saved as an object- it only appears in the built-in viewer for R. However, you can right click on the plot to copy and paste it elsewhere. If you accidently close a plot and want to see it again, just re-run the code cell that created it.*
-
 
 #### Explore Seasonal Transition Dates
 
@@ -286,7 +286,7 @@ plot(GCC_timeseries$date, GCC_timeseries$gcc_90,
      col = "black", type = "l",
      cex = 2, cex.lab = 2, cex.axis = 2, cex.main = 3,
      xlab = 'Date', ylab = 'GCC', 
-     main = 'Seasonal Transition Dates')
+     main = paste0(site_name, ': ', 'Seasonal Transition Dates'))
 
 
 # Add points to show transition dates:
@@ -326,7 +326,7 @@ plot(trans_table_spring[,1],trans_table_spring[,2],
     type = "b", col = "darkgreen",
     cex = 2, cex.lab = 2, cex.axis = 2, cex.main = 3,
     xlab = 'Year', ylab = 'Spring Transition Date (DOY)',
-    main = 'Date of Spring Onset Through the Years')
+    main = paste0(site_name, ': ', 'Date of Spring Onset Through the Years'))
 ```
 
 And now plot the fall brown-down transition dates.
@@ -343,7 +343,7 @@ plot(trans_table_fall[,1],trans_table_fall[,2],
      type = "b", col = "brown",
      cex = 2, cex.lab = 2, cex.axis = 2, cex.main = 3,
      xlab = 'Year', ylab = 'Autumn Transition Date (DOY)',
-     main = 'Date of Autumn Onset Through the Years')
+     main = paste0(site_name, ': ', 'Date of Autumn Onset Through the Years'))
 ```
 
 As you can see, there is a decent amount of year-to-year variability in when a site greens up (spring) or browns down (fall), directly impacting the total length of the growing sesason. This variability is largely due to differences in weather, such as precipitation and temperature. Climate change is also shifting seasonal transitions dates, which can impact many other variables, such as plant-animal interactions and ecosystem carbon and water storage.
@@ -361,7 +361,7 @@ download_midday_images(site = site_name,
                        download_dir = dir)
 ```
 
-Now, we'll use those images to create a photo collage that displays changes in phenology throughout the year. First we'll set it up and check that it's working correctly. You should have 12 images (1 per month), so when you run the code below, "n" should equal 12. If not, look in your "dir" (pheno_images) folder and make sure you only have images for a single PhenoCam site. If you have more than 12, right click on the images you don't want and delete them from the folder.
+Now, we'll use those images to create a photo collage that displays changes in phenology throughout the year. First we'll set it up and check that it's working correctly. You should have 12 images (1 per month), so when you run the code below, "n" should equal 12. If not, look in your "dir" (pheno_images) folder and make sure it only includes images for a single PhenoCam site. If you have more than 12, right click on the images you don't want and delete them from the folder.
 
 ```{r}
 # Isolate images from your designated directory
@@ -427,7 +427,9 @@ As an example, here's the gif I made for the lacclair site. Your gif will be sav
 
 #### Thank you!
 
-If you'd like, now try this exercise with another PhenoCam site. Perhaps try a different ecosystem type! To do this, edit the cell near the beginning where you assign the site name, vegtation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Then be sure to run that cell and all cells below it in sequential order.
+Now try this exercise with another PhenoCam site. Perhaps choose a different ecosystem type!
+
+To do this, edit the cell near the beginning where you assign the site name, vegtation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Then be sure to run that cell and all cells below it in sequential order.
 
 Before trying a new site, be sure to either clear your working directory folder (delete the downloaded photos/files) or create/designate a new folder. And run this command to re-set your plotting parameters:
 
