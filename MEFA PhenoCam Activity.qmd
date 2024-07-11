@@ -21,7 +21,7 @@ Established in 2008, the [PhenoCam Network](https://phenocam.nau.edu/webcam/) is
 
 #### Quantifying Greenness
 
-Beyond being pretty pictures, PhenoCam images also provide a quantitative way to track vegetation phenology by measuring the intensity of canopy greenness. Digital images are stored as three different color channels - red, green, and blue (RGB) - which are the primary colors for light, and combine in different ratios to create all the visible colors in a photograph. Old-style TVs use this same method, as does your smartphone.
+Beyond being pretty pictures, PhenoCam images also provide a quantitative way to track vegetation phenology by measuring the intensity of canopy greenness. Digital images are stored as three different color channels - red, green, and blue (RGB) - which are the primary colors of light, and combine in different ratios to create all the visible colors in a photograph. Old-style TVs use this same method, as does your smartphone.
 
 ![The primary colors of light combine to create all visible colors in digital images.](images/RGB_colors.png){fig-align="center" width="250"}
 
@@ -37,17 +37,17 @@ And at this shrub site, only the shrub plants are included in the ROI and bare g
 
 ![ROI (unshaded portion) for a shrub site- bare ground is excluded.](images/shrub_ROI.png){fig-align="center" width="350"}
 
-When GCC is calculated over a long time period at a site, a timeseries of vegetation greenness can be created. Below is the GCC timeseries for the laccair forest site shown above over the past 9 years. Notice the clear seasonal cycle of vegetation green-up in the spring followed by leaf color change and senescence (brown-down/death) in autumn.
+When GCC is calculated over a long time period at a site, a timeseries of vegetation greenness can be created. Below is the GCC timeseries for the "laccair" forest site shown above over the past 9 years. Notice the clear seasonal cycle of vegetation green-up in the spring followed by leaf color change and senescence (brown-down/death) in autumn.
 
 ![Timeseries of canopy greeness (GCC) at a forest site in Canada (lacclair).](images/lacclair_GCC.png){fig-align="center" width="1800"}
 
 #### Seasonal Transition Dates
 
-These GCC timeseries can be used to extract seasonal transition dates across the years. For example, to determine the timing of spring green-up, we can use the amplitude (height) of each annual peak to determine when (what day of the year) vegetation at the site has reached either 10%, 25%, or 50% of it's maximum greenness. We consider this to be the start of spring green-up. We use a similar method to extract the start of autumn brown-down.
+These GCC timeseries can be used to extract seasonal transition dates across the years. For example, to determine the timing of spring green-up, we can use the amplitude (height) of each annual peak to determine when (what day of the year) vegetation at the site has reached either 10%, 25%, or 50% of its maximum greenness. We consider this to be the start of spring green-up. We use a similar method to extract the start of autumn brown-down.
 
 ![The dates of spring green-up (green symbols) and autumn brown-down (brown symbols) can be extracted from the GCC timeseries.](images/transition%20dates.png){fig-align="center" width="400"}
 
-Over a long time period, the timing of seasonal transition dates can be used to track shifts in vegetation phenology, such as with climate change. This dataset can also be used to understand what environmental and biologic factors (e.g., temperature, rainfall, sunlight) influence the timing of spring leaf-out and autumn color changes.
+Over a long time period, the timing of seasonal transition dates can be used to track shifts in vegetation phenology, such as with climate change. This dataset can also be used to determine which environmental and biologic factors (e.g., temperature, rainfall, sunlight) influence the timing of spring leaf-out and autumn color changes.
 
 ![Seasonal transition dates at a deciduous forest site in Canada (lacclair) over the past 9 years.](images/transition%20dates_timeseries.png){fig-align="center"}
 
@@ -247,7 +247,7 @@ plot(GCC_timeseries$date, GCC_timeseries$gcc_90,
 
 ```
 
-*Note: Since we created this plot in base R (rather than through another graphing package, such as "ggplot"), the plot isn't saved as an object- it only appears in the built-in viewer for R. However, you can right click on the plot to copy and paste it elsewhere. If you accidentally close a plot and want to see it again, just re-run the code cell that created it.*
+*Note: Since the plot isn't saved as an object, it only appears in the built-in plot viewer for R. However, you can right click on the plot to copy and paste it elsewhere. If you accidentally close a plot and want to see it again, just re-run the code cell that created it.*
 
 #### Explore Seasonal Transition Dates
 
@@ -313,7 +313,7 @@ points(x = as.Date(td_fall$transition_50, origin = "1970-01-01"),
        col = "brown")
 ```
 
-Now, let's explore the variability of seasonal transition dates throughout the available data years. This works best if you chose a site with a longer timeseries. We'll first convert the transitions dates into a "day-of-year" (DOY) format (e.g., Jan 1 = DOY 1, Jan 2 = DOY 2, etc.), and then plot those by year.
+Now, let's explore the variability of seasonal transition dates throughout the available data years. This works best if you chose a site with a longer timeseries. We'll first convert the transition dates into a "day-of-year" (DOY) format (e.g., Jan 1 = DOY 1, Jan 2 = DOY 2, etc.), and then plot those by year.
 
 ```{r}
 # Convert green-up dates to date format and then DOY
@@ -327,7 +327,7 @@ td_fall_DOY <- lubridate::yday(td_fall_dates)
 # Extract spring data years
 years_spr <- as.numeric(format(td_spring_dates,'%Y'))
 
-# Create table of years and spring trans dates
+# Create table of years and spring transition dates
 trans_table_spring <- data.frame(years_spr, td_spring_DOY)
 
 # Plot spring green-up dates
@@ -344,7 +344,7 @@ And now plot the fall brown-down transition dates.
 # Extract fall data years
 years_fall <- as.numeric(format(td_fall_dates,'%Y'))
 
-# Create table of years and fall trans dates
+# Create table of years and fall transition dates
 trans_table_fall <- data.frame(years_fall, td_fall_DOY)
 
 # Plot fall brown-down dates
@@ -355,7 +355,7 @@ plot(trans_table_fall[,1],trans_table_fall[,2],
      main = paste0(site_name, ': ', 'Date of Autumn Onset Through the Years'))
 ```
 
-As you can see, there is a decent amount of year-to-year variability in when a site greens up (spring) or browns down (fall), directly impacting the total length of the growing sesason. This variability is largely due to differences in weather, such as precipitation and temperature. Climate change is also shifting seasonal transitions dates, which can impact many other variables, such as plant-animal interactions and ecosystem carbon and water storage.
+As you can see, there is a decent amount of year-to-year variability in when a site greens up (spring) or browns down (fall), directly impacting the total length of the growing sesason. This variability is largely due to differences in weather, such as precipitation and temperature. Climate change is also shifting seasonal transition dates, which can impact many other variables, such as plant-animal interactions and ecosystem carbon and water storage.
 
 ### Download PhenoCam Images
 
@@ -370,7 +370,7 @@ download_midday_images(site = site_name,
                        download_dir = dir)
 ```
 
-Now, we'll use those images to create a photo collage that displays changes in phenology throughout the year. First we'll set it up and check that it's working correctly. You should have 12 images (1 per month), so when you run the code below, "n" should equal 12. If not, look in your "dir" (pheno_images) folder and make sure it only includes images for a single PhenoCam site. If you have more than 12, right click on the images you don't want and delete them from the folder.
+Now, we'll use those images to create a photo collage that displays changes in phenology throughout the year. First, we'll set it up and check that it's working correctly. You should have 12 images (1 per month), so when you run the code below, "n" should equal 12. If not, look in your "dir" (pheno_images) folder and make sure it only includes images for a single PhenoCam site. If you have more than 12, right click on the images you don't want and delete them from the folder.
 
 ```{r}
 # Isolate images from your designated directory
@@ -403,7 +403,7 @@ for(i in 1:n){
 mtext(paste0(site_name, ': ', 'Canopy Greenness Through the Months'), font = 2, cex = 1.8, outer = TRUE)
 ```
 
-Finally, we'll use those same images to create a gif that shows changes in phenology over time. These are great to use in presentations to visualize seasonal transitions!
+Finally, we'll use those same images to create a gif that shows changes in phenology over time. This is great to use in presentations to visualize seasonal transitions!
 
 ```{r}
 # Make timelapse gif of images
@@ -425,22 +425,22 @@ gif <- list.files(path = dir, pattern = "*.jpg", full.names = T) %>%
   # Designate file name & save to your directory
   image_write(paste0(dir,"/MonthlyGreenness_gif.gif")) 
 
-# The gif will be saved to the directory you indicated at the beginning (dir)
+# The gif will be saved to the directory you indicated at the beginning 
 # You can check the directory path below
 dir
 ```
 
-As an example, here's the gif I made for the lacclair site. Your gif will be saved to the directory you indicated at the beginning (called "dir").
+As an example, here's the gif I made for the lacclair site. Your gif will be saved to the directory you indicated at the beginning (dir). If you want to save it, right click on the gif file name and select "download".
 
 <img src="images/MonthlyGreenness_gif.gif" align="left" width="750"/>/
 
-#### Thank you!
+### Explore another site!
 
-Now try this exercise with another PhenoCam site. Perhaps choose a different ecosystem type!
+Now try this exercise with another PhenoCam site. Perhaps choose a different ecosystem type. Think about how seasonal greenness patterns differ between sites. What do you think causes these differences?
 
 To do this, edit the cell near the beginning where you assign the site name, vegetation type, year, and ROI (in the "Download & Plot Canopy Greenness" section). Be sure to re-run that cell and all cells below it in sequential order.
 
-But before trying a new site, run this code cell to re-set your plotting parameters and delete all the downloaded files in your "pheno_images" folder.
+\*\***But before trying a new site, run this code cell** to re-set your plotting parameters and delete all the downloaded files in your "pheno_images" (dir) folder. Be sure to download your gif first if you want to save a copy.
 
 ```{r}
 # Reset plotting parameters
@@ -453,4 +453,4 @@ f <- list.files(dir, include.dirs = F, full.names = T, recursive = T)
 file.remove(f)
 ```
 
-Thanks for exploring PhenoCam data. Hopefully, you have a new-found appreciation for phenology!
+Thanks for exploring PhenoCam data. Hopefully, you have a stronger appreciation for phenology now!
