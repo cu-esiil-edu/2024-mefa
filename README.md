@@ -1,6 +1,6 @@
 # 2024-mefa
 
-This is repository for training materials for the 2024 Macrosystems Ecology for All (MEFA) event at Boulder, CO.
+This is a repository for PhenoCam workshop materials for the 2024 Macrosystems Ecology for All (MEFA) event at Boulder, CO.
 
 [![DOI](https://zenodo.org/badge/814375122.svg)](https://zenodo.org/doi/10.5281/zenodo.13742949)
 
